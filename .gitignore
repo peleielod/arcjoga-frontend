@@ -1,0 +1,78 @@
+# General
+.DS_Store
+*.swp
+*.swap
+*.log
+*.bak
+*.tmp
+*.temp
+
+# Flutter/Dart/Pub related
+doc/api/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+flutter_*.png
+
+# Android related
+android/**/gradle-wrapper.jar
+android/.gradle
+android/captures/
+android/gradlew
+android/gradlew.bat
+android/local.properties
+android/**/GeneratedPluginRegistrant.*
+
+# iOS related
+ios/**/GeneratedPluginRegistrant.*
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/app.flx
+ios/Flutter/app.zip
+ios/Flutter/flutter_assets/
+ios/Flutter/App.framework
+ios/Flutter/FlutterPluginRegistrant/
+ios/.symlinks/
+ios/Runner.xcworkspace
+ios/Runner.xcodeproj/project.xcworkspace
+ios/Runner.xcodeproj/xcuserdata/
+
+# macOS related
+macos/Flutter/GeneratedPluginRegistrant.*
+macos/Flutter/ephemeral/
+macos/Flutter/flutter_export_environment.sh
+macos/Flutter/FlutterPluginRegistrant/
+macos/.symlinks/
+macos/Runner.xcworkspace
+macos/Runner.xcodeproj/project.xcworkspace
+macos/Runner.xcodeproj/xcuserdata/
+
+# Web related
+web/manifest.json
+
+# Windows related
+windows/Flutter/GeneratedPluginRegistrant.*
+
+# Linux related
+linux/flutter/ephemeral/
+
+# VS Code related
+.vscode/
+
+# IntelliJ related
+.idea/
+*.iml
+
+# Other commonly ignored files
+*/config.gypi
+node_modules/
+npm-debug.log
+yarn-error.log
+test_coverage/
+
+lib/config.dart
