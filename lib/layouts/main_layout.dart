@@ -3,16 +3,16 @@ import 'package:arcjoga_frontend/style.dart';
 import 'package:arcjoga_frontend/widgets/appbars/app_drawer.dart';
 
 class MainLayout extends StatelessWidget {
-  final String title;
+  final String? title;
   final List<Widget> children;
   final PreferredSizeWidget appBar;
   final Color backgroundColor;
 
   const MainLayout({
     super.key,
-    required this.title,
     required this.children,
     required this.appBar,
+    this.title,
     this.backgroundColor = const Color(Style.white),
   });
 
@@ -30,11 +30,12 @@ class MainLayout extends StatelessWidget {
               // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 20),
-                Text(
-                  title.toUpperCase(),
-                  style: Style.primaryDarkTitle,
-                  textAlign: TextAlign.center,
-                ),
+                if (title != null)
+                  Text(
+                    title!.toUpperCase(),
+                    style: Style.primaryDarkTitle,
+                    textAlign: TextAlign.center,
+                  ),
                 const SizedBox(height: 10),
                 ...children,
               ],

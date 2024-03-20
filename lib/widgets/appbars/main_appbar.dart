@@ -46,7 +46,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
           ? null
           : Center(
               child: SvgPicture.asset(
-                'assets/images/mystic_text_logo.svg',
+                'assets/images/arcjoga_logo.svg',
                 // width: 100,
                 height: 36,
               ),
