@@ -140,86 +140,80 @@ class _LoginFormState extends State<LoginForm> {
       children: [
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 30),
-          padding: const EdgeInsets.only(
-            top: 50,
-            left: 30,
-            right: 30,
-            bottom: 10,
-          ),
           decoration: BoxDecoration(
-            color: const Color(Style.primaryDark),
-            border: Border.all(
-              color: const Color(Style.secondaryDark),
-              width: 2,
-            ),
-            borderRadius: BorderRadius.circular(10),
+            color: const Color(Style.white),
+            borderRadius: BorderRadius.circular(15),
           ),
-          child: Form(
-            child: Column(
-              children: [
-                AppTextField(
-                  labelText: 'Felhasználónév vagy e-mail cím',
-                  textController: _emailController,
-                  textStyle: Style.textWhiteSmall,
-                  textColor: const Color(Style.white),
-                  fillColor: const Color(Style.primaryDark),
-                  borderColor: const Color(Style.primaryLight),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: Validators.emailValidator,
-                  showLabelOnFocus: false,
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              Text(
+                'Belépés',
+                style: Style.primaryLightText.copyWith(fontSize: 24),
+              ),
+              const SizedBox(height: 20),
+              Form(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Column(
+                    children: [
+                      AppTextField(
+                        labelText: 'Felhasználónév vagy e-mail cím',
+                        textController: _emailController,
+                        textStyle: Style.primaryLightTextSmall,
+                        textColor: const Color(Style.primaryLight),
+                        fillColor: const Color(Style.white),
+                        borderColor: const Color(Style.primaryLight),
+                        keyboardType: TextInputType.emailAddress,
+                        validator: Validators.emailValidator,
+                        showLabelOnFocus: false,
+                      ),
+                      const SizedBox(height: 20),
+                      AppTextField(
+                        labelText: 'Jelszó',
+                        textController: _passwordController,
+                        textStyle: Style.primaryLightTextSmall,
+                        textColor: const Color(Style.primaryLight),
+                        fillColor: const Color(Style.white),
+                        borderColor: const Color(Style.primaryLight),
+                        keyboardType: TextInputType.text,
+                        validator: Validators.emailValidator,
+                        showLabelOnFocus: false,
+                        obscureText: true,
+                      ),
+                      const SizedBox(height: 20),
+                      AppTextButton(
+                        text: 'BELÉPÉS',
+                        width: 200,
+                        backgroundColor: const Color(Style.primaryLight),
+                        textStyle: Style.textWhite,
+                        onPressed: _handleLogin,
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 20),
-                AppTextField(
-                  labelText: 'Jelszó',
-                  textController: _passwordController,
-                  textStyle: Style.textWhiteSmall,
-                  textColor: const Color(Style.white),
-                  fillColor: const Color(Style.primaryDark),
-                  borderColor: const Color(Style.primaryLight),
-                  keyboardType: TextInputType.text,
-                  validator: Validators.emailValidator,
-                  showLabelOnFocus: false,
-                  obscureText: true,
+              ),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
+                  ),
+                  color: Color(Style.primaryDark),
                 ),
-                const SizedBox(height: 20),
-                AppTextButton(
-                  text: 'Bejelentkezés',
-                  width: 290,
-                  backgroundColor: const Color(Style.primaryLight),
-                  textStyle: Style.primaryDarkText,
-                  onPressed: _handleLogin,
-                ),
-                // const SizedBox(height: 20),
-                TextButton(
+                child: TextButton(
                   onPressed: () =>
                       Navigator.pushNamed(context, ForgotPassword.routeName),
                   child: const Text(
                     'Elfelejtetted a jelszavad?',
-                    style: Style.secondaryLightText,
+                    style: Style.textWhite,
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
-        Positioned(
-          top: -20,
-          left: 60,
-          child: Container(
-            width: 290,
-            padding: const EdgeInsets.symmetric(
-              horizontal: 30,
-              vertical: 10,
-            ),
-            decoration: BoxDecoration(
-              color: const Color(Style.primaryLight),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: const Text(
-              'Belépés',
-              style: Style.textWhite,
-              textAlign: TextAlign.center,
-            ),
+              ),
+            ],
           ),
         ),
       ],

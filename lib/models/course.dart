@@ -20,14 +20,15 @@ class Course {
   });
 
   factory Course.fromJson(Map<String, dynamic> json) {
+    var testJson = json;
     return Course(
       id: json['id'],
       imageUrl: json['image_url'],
       title: json['title'],
       description: json['description'],
       price: json['price'],
-      isFree: json['is_free'],
-      order: json['order'],
+      isFree: json['is_free'] == 1,
+      order: json['home_order'] ?? 0,
       validityWeeks: json['validity_weeks'],
     );
   }

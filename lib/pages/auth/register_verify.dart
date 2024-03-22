@@ -136,7 +136,7 @@ class _RegisterVerifyState extends State<RegisterVerify> {
                               width: 200,
                               child: Text(
                                 'A visszaigazolás sikeres volt!',
-                                style: Style.primaryDarkText,
+                                style: Style.textDarkBlue,
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -161,7 +161,7 @@ class _RegisterVerifyState extends State<RegisterVerify> {
                               width: 200,
                               child: Text(
                                 'Adja meg az email-ben kapott visszaigazoló kódot:',
-                                style: Style.primaryDarkText,
+                                style: Style.textDarkBlue,
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -169,11 +169,11 @@ class _RegisterVerifyState extends State<RegisterVerify> {
                             AppTextField(
                               labelText: 'Visszaigazoló kód',
                               textController: _codeController,
-                              textStyle: Style.primaryDarkText,
                               keyboardType: TextInputType.emailAddress,
-                              textColor: const Color(Style.primaryDark),
+                              textStyle: Style.primaryLightTextSmall,
+                              textColor: const Color(Style.primaryLight),
                               fillColor: const Color(Style.white),
-                              borderColor: const Color(Style.primaryDark),
+                              borderColor: const Color(Style.primaryLight),
                               showLabelOnFocus: false,
                               validator: Validators.requiredFieldValidator,
                             ),

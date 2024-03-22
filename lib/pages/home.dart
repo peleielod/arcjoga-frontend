@@ -25,21 +25,25 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     List<Course> courses = Provider.of<CourseProvider>(context).courses;
-
+    print('Courses: $courses');
     return MainLayout(
-      appBar: const MainAppBar(),
+      appBar: const MainAppBar(
+        onHomePage: true,
+        title: 'TANFOLYAMOK',
+      ),
       children: [
         Padding(
           padding: const EdgeInsets.all(10),
-          child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 1,
-              mainAxisSpacing: 10,
-            ),
+          child: ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: courses.length,
             itemBuilder: (context, index) {
-              return CourseCard(
-                course: courses[index],
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: CourseCard(
+                  course: courses[index],
+                ),
               );
             },
           ),

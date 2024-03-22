@@ -30,7 +30,7 @@ class AppTextButton extends StatelessWidget {
             horizontal: 10.0,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(30),
           ),
         ),
         onPressed: onPressed,

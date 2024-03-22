@@ -1,3 +1,4 @@
+import 'package:arcjoga_frontend/models/loader.dart';
 import 'package:arcjoga_frontend/pages/auth/forgot_password.dart';
 import 'package:arcjoga_frontend/pages/auth/forgot_password_sent.dart';
 import 'package:arcjoga_frontend/pages/auth/forgot_password_verify.dart';
@@ -8,10 +9,51 @@ import 'package:arcjoga_frontend/pages/home.dart';
 import 'package:arcjoga_frontend/pages/settings/change_email.dart';
 import 'package:arcjoga_frontend/pages/settings/change_password.dart';
 import 'package:arcjoga_frontend/pages/settings/profile.dart';
+import 'package:arcjoga_frontend/providers/course_provider.dart';
+import 'package:arcjoga_frontend/providers/user_provider.dart';
+import 'package:arcjoga_frontend/widgets/common/loader_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => UserProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CourseProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LoaderModel(),
+        ),
+      ],
+      child: const MyAppWithLoader(),
+    ),
+  );
+}
+
+class MyAppWithLoader extends StatelessWidget {
+  const MyAppWithLoader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Watching the loader model state
+    final loaderModel = Provider.of<LoaderModel>(context);
+
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Stack(
+        children: [
+          const MyApp(),
+          if (loaderModel.isLoading) ...[
+            const Positioned.fill(child: LoaderWidget()),
+          ],
+        ],
+      ),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {

@@ -1,8 +1,7 @@
 import 'package:arcjoga_frontend/models/user.dart';
-import 'package:arcjoga_frontend/services/auth_service.dart';
+import 'package:arcjoga_frontend/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:arcjoga_frontend/pages/auth/login.dart';
 import 'package:arcjoga_frontend/pages/settings/profile.dart';
 import 'package:arcjoga_frontend/style.dart';
@@ -12,45 +11,37 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool onAuthPage;
   final bool onHomePage;
   final bool showBackBtn;
+  final String? title;
 
   const MainAppBar({
     super.key,
     this.onAuthPage = false,
     this.onHomePage = false,
     this.showBackBtn = true,
+    this.title,
   });
 
   @override
   Widget build(BuildContext context) {
-    final authService = Provider.of<AuthService>(
-      context,
-      listen: false,
-    );
+    var userProvider = Provider.of<UserProvider>(context);
 
-    Future<bool> isLoggedIn = authService.isLoggedIn();
+    Future<bool> isLoggedIn = userProvider.isUserLoggedIn();
     Future<User?> userFuture = isLoggedIn.then((isLoggedIn) {
       if (isLoggedIn) {
-        return authService.getUser();
+        return userProvider.fetchUser();
       }
       return null;
     });
 
     return AppBar(
       backgroundColor: const Color(Style.primaryDark),
-      foregroundColor: const Color(Style.white),
+      foregroundColor: const Color(Style.primaryLight),
+      centerTitle: true,
       leading: FutureBuilder<User?>(
         future: userFuture,
         builder: (context, snapshot) => _buildLeadingWidget(context, snapshot),
       ),
-      title: onAuthPage
-          ? null
-          : Center(
-              child: SvgPicture.asset(
-                'assets/images/arcjoga_logo.svg',
-                // width: 100,
-                height: 36,
-              ),
-            ),
+      title: onAuthPage ? null : Text(title ?? ''),
       actions: [
         IconButton(
           icon: const Icon(
@@ -87,7 +78,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ? NetworkImage(
                     user.avatarUrl!,
                   )
-                : const AssetImage('assets/icons/profile_icon.png')
+                : const AssetImage('assets/icons/arc_profile_icon.png')
                     as ImageProvider,
           ),
         ),
@@ -96,7 +87,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
         onHomePage) {
       return IconButton(
         icon: Image.asset(
-          'assets/icons/profile_icon.png',
+          'assets/icons/arc_profile_icon.png',
           height: 28,
         ),
         onPressed: () => Navigator.pushNamed(

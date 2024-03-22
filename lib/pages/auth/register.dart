@@ -44,7 +44,7 @@ class _RegisterState extends State<Register> {
                   children: [
                     const Text(
                       'Van már fiókod?',
-                      style: Style.primaryDarkTextMid,
+                      style: Style.textDarkBlue,
                     ),
                     TextButton(
                       onPressed: () {
@@ -52,7 +52,7 @@ class _RegisterState extends State<Register> {
                       },
                       child: const Text(
                         'Lépj be!',
-                        style: Style.primaryDarkTextBold,
+                        style: Style.textDarkBlueBold,
                       ),
                     ),
                   ],

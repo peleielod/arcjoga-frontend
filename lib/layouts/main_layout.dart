@@ -29,7 +29,6 @@ class MainLayout extends StatelessWidget {
             child: Column(
               // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 20),
                 if (title != null)
                   Text(
                     title!.toUpperCase(),

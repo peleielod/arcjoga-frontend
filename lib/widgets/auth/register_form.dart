@@ -113,7 +113,7 @@ class _RegisterFormState extends State<RegisterForm> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: 30,
+        vertical: 20,
         horizontal: 20,
       ),
       child: Form(
@@ -122,10 +122,10 @@ class _RegisterFormState extends State<RegisterForm> {
           children: [
             AppTextField(
               textController: _emailController,
-              textStyle: Style.primaryDarkTextSmall,
-              textColor: const Color(Style.primaryDark),
+              textStyle: Style.primaryLightTextSmall,
+              textColor: const Color(Style.primaryLight),
               fillColor: const Color(Style.white),
-              borderColor: const Color(Style.primaryDark),
+              borderColor: const Color(Style.primaryLight),
               keyboardType: TextInputType.emailAddress,
               labelText: 'E-mail cím',
               validator: Validators.emailValidator,
@@ -133,10 +133,10 @@ class _RegisterFormState extends State<RegisterForm> {
             const SizedBox(height: 30),
             AppTextField(
               textController: _usernameController,
-              textStyle: Style.primaryDarkTextSmall,
-              textColor: const Color(Style.primaryDark),
+              textStyle: Style.primaryLightTextSmall,
+              textColor: const Color(Style.primaryLight),
               fillColor: const Color(Style.white),
-              borderColor: const Color(Style.primaryDark),
+              borderColor: const Color(Style.primaryLight),
               keyboardType: TextInputType.text,
               labelText: 'Felhasználónév',
               validator: Validators.requiredFieldValidator,
@@ -145,24 +145,24 @@ class _RegisterFormState extends State<RegisterForm> {
             AppTextField(
               labelText: 'Jelszó',
               textController: _passwordController,
-              textStyle: Style.primaryDarkTextSmall,
+              textStyle: Style.primaryLightTextSmall,
               keyboardType: TextInputType.text,
               obscureText: true,
-              textColor: const Color(Style.primaryDark),
+              textColor: const Color(Style.primaryLight),
               fillColor: const Color(Style.white),
-              borderColor: const Color(Style.primaryDark),
+              borderColor: const Color(Style.primaryLight),
               validator: Validators.passwordValidator,
             ),
             const SizedBox(height: 30),
             AppTextField(
               labelText: 'Jelszó újra',
               textController: _passwordAgainController,
-              textStyle: Style.primaryDarkTextSmall,
+              textStyle: Style.primaryLightTextSmall,
               keyboardType: TextInputType.text,
               obscureText: true,
-              textColor: const Color(Style.primaryDark),
+              textColor: const Color(Style.primaryLight),
               fillColor: const Color(Style.white),
-              borderColor: const Color(Style.primaryDark),
+              borderColor: const Color(Style.primaryLight),
               validator: Validators.passwordValidator,
             ),
             if (_errorMsg.isNotEmpty)
@@ -173,12 +173,12 @@ class _RegisterFormState extends State<RegisterForm> {
             // Checkbox(value: value, onChanged: onChanged)
             AppTextButton(
               text: 'Regisztráció',
-              width: 330,
+              width: 200,
               textStyle: Style.textWhite,
               backgroundColor: _isLoading
                   ? Colors.grey
                   : const Color(
-                      Style.primaryDark,
+                      Style.buttonDark,
                     ),
               onPressed: () => _isLoading ? null : _handleRegister(),
             ),

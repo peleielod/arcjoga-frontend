@@ -20,13 +20,13 @@ class AppNetworkImage extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child: isSvg
           ? SvgPicture.asset(
-              'assets/images/mystic_logo_good.svg',
+              imageUrl,
               width: 100,
               height: 70,
             )
           : CachedNetworkImage(
               width: width,
-              height: 70,
+              // height: 70,
               imageUrl: imageUrl,
               placeholder: (context, url) => const CircularProgressIndicator(),
               errorWidget: (context, url, error) => const Icon(Icons.error),

@@ -3,11 +3,12 @@ class User {
   final String email;
   final String username;
   final String? avatarUrl;
-  int freeFortuneCount;
+  final bool hasSub;
+
   User({
     required this.id,
     required this.username,
-    required this.freeFortuneCount,
+    required this.hasSub,
     required this.email,
     this.avatarUrl,
   });
@@ -16,7 +17,7 @@ class User {
     return User(
       id: json['id'],
       username: json['name'] ?? json['username'],
-      freeFortuneCount: json['free_fortune_count'],
+      hasSub: json['has_sub'] == 1,
       avatarUrl: json['avatar_url'],
       email: json['email'],
     );
@@ -25,7 +26,7 @@ class User {
   Map<String, dynamic> toJson() => {
         'id': id,
         'username': username,
-        'free_fortune_count': freeFortuneCount,
+        'has_sub': hasSub,
         'avatar_url': avatarUrl,
         'email': email,
       };

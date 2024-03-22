@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:arcjoga_frontend/pages/auth/login.dart';
+import 'package:arcjoga_frontend/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:another_flushbar/flushbar.dart';
@@ -23,7 +25,6 @@ class CustomResponse {
 
 class Helpers {
   static const _storage = FlutterSecureStorage();
-  static bool _isDialogShowing = true;
 
   static Future<CustomResponse> sendFileRequest(
     BuildContext context,
@@ -55,7 +56,8 @@ class Helpers {
       String? bearerToken = await _storage.read(key: 'token');
       if (bearerToken == null) {
         Flushbar(
-          message: "Bearer token not found",
+          message:
+              "A felhasználói azonosítás sikertelen volt! Kérjük jelentkezzen be!",
           duration: const Duration(seconds: 3),
           flushbarPosition: FlushbarPosition.TOP,
         ).show(context);
@@ -74,7 +76,8 @@ class Helpers {
         );
       } else {
         Flushbar(
-          message: "! $endpoint hiba: ${response.statusCode}  ${response.body}",
+          message:
+              "A kérés sikertelen volt: ${response.statusCode}", //  ${response.body}
           duration: const Duration(seconds: 3),
           flushbarPosition: FlushbarPosition.TOP,
           backgroundColor: Colors.red.shade400,
@@ -94,7 +97,7 @@ class Helpers {
         );
       }
       Flushbar(
-        message: "! $endpoint EXCEPTION: $e",
+        message: "Váratlan szerver hiba történt...", // $e
         duration: const Duration(seconds: 3),
         flushbarPosition: FlushbarPosition.TOP,
         backgroundColor: Colors.red.shade400,
@@ -134,16 +137,25 @@ class Helpers {
     // _showLoader(context);
 
     if (requireToken) {
+      var isLoggedIn =
+          await Provider.of<UserProvider>(context).isUserLoggedIn();
       String? bearerToken = await _storage.read(key: 'token');
-      if (bearerToken == null) {
+      if (bearerToken == null && !isLoggedIn) {
         Flushbar(
           message: "A bejelentkezése lejárt, kérjük lépjen be újra fiókjába!",
           duration: const Duration(seconds: 3),
           flushbarPosition: FlushbarPosition.TOP,
           backgroundColor: Colors.red.shade400,
-        ).show(context);
+        ).show(context).then(
+              (_) => Navigator.pushNamedAndRemoveUntil(
+                context,
+                Login.routeName,
+                (Route<dynamic> route) => false,
+              ),
+            );
 
-        throw Exception("Bearer token not found");
+        // Immediately exit the function if the user is not logged in.
+        return Future.error("User not logged in");
       }
       headers ??= {};
       headers['Authorization'] = 'Bearer $bearerToken';
@@ -159,7 +171,7 @@ class Helpers {
       );
 
       if (response.statusCode == 200) {
-        print("RESPONSE: ${response.body}");
+        // print("RESPONSE: ${response.body}");
         loaderModel.hide();
 
         return CustomResponse(
@@ -172,8 +184,8 @@ class Helpers {
         loaderModel.hide();
 
         Flushbar(
-          message:
-              "A felhasználói azonosítás sikertelen volt!: ${response.statusCode} ${response.body}",
+          //: ${response.statusCode} ${response.body}
+          message: "A felhasználói azonosítás sikertelen volt!",
           duration: const Duration(seconds: 3),
           flushbarPosition: FlushbarPosition.TOP,
           backgroundColor: Colors.red.shade400,
@@ -188,7 +200,7 @@ class Helpers {
         loaderModel.hide();
         Flushbar(
           message:
-              "Szerver hiba történt...: ${response.statusCode} ${response.body}",
+              "Szerver hiba történt...: ${response.statusCode}", //${response.body}
           duration: const Duration(seconds: 3),
           flushbarPosition: FlushbarPosition.TOP,
           backgroundColor: Colors.red.shade400,
@@ -210,7 +222,7 @@ class Helpers {
       loaderModel.hide();
 
       Flushbar(
-        message: "Váratlan szerver hiba történt...: $e",
+        message: "Váratlan szerver hiba történt...: $e", //: $e
         duration: const Duration(seconds: 3),
         flushbarPosition: FlushbarPosition.TOP,
         backgroundColor: Colors.red.shade400,
@@ -249,44 +261,5 @@ class Helpers {
           headers: headers,
         );
     }
-  }
-
-  static void _hideLoader(BuildContext context) {
-    try {
-      if (_isDialogShowing) {
-        Navigator.pop(context);
-        _isDialogShowing = false;
-      }
-    } catch (e) {
-      Flushbar(
-        message: "A loader eltüntetése sikertelen volt: $e",
-        duration: const Duration(seconds: 3),
-        flushbarPosition: FlushbarPosition.TOP,
-        backgroundColor: Colors.red.shade400,
-      ).show(context);
-    }
-  }
-
-  static void _showLoader(BuildContext context) {
-    _isDialogShowing = true;
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return const Dialog(
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CircularProgressIndicator(),
-                SizedBox(width: 20),
-                Text("Betöltés..."),
-              ],
-            ),
-          ),
-        );
-      },
-    );
   }
 }

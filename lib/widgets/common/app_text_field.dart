@@ -76,24 +76,25 @@ class _AppTextFieldState extends State<AppTextField> {
       validator: widget.validator,
       focusNode: _focusNode,
       decoration: InputDecoration(
+        
         labelText: getLabel(),
         labelStyle: widget.textStyle,
         fillColor: widget.fillColor,
         filled: true,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(30),
           borderSide: BorderSide(
             color: widget.borderColor,
           ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(30),
           borderSide: BorderSide(
             color: widget.borderColor,
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(30),
           borderSide: BorderSide(
             color: widget.borderColor,
           ),
