@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:arcjoga_frontend/pages/auth/login.dart';
 import 'package:arcjoga_frontend/pages/settings/profile.dart';
 import 'package:arcjoga_frontend/style.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -61,22 +62,32 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
             left: 15,
             right: 0,
           ),
-          child: CircleAvatar(
-            radius: 18,
-            backgroundImage: user.avatarUrl != null
-                ? NetworkImage(
-                    user.avatarUrl!,
-                  )
-                : const AssetImage('assets/icons/arc_profile_icon.png')
-                    as ImageProvider,
-          ),
+          child: user.avatarUrl != null && user.avatarUrl!.isNotEmpty
+              ? CircleAvatar(
+                  radius: 18,
+                  backgroundImage: NetworkImage(user.avatarUrl!),
+                )
+              : Container(
+                  width: 18, // Match the size of the CircleAvatar
+                  height: 18,
+                  padding: const EdgeInsets.all(5),
+                  decoration: const BoxDecoration(
+                    color: Color(Style.borderLight),
+                    shape: BoxShape.circle,
+                  ),
+                  child: ClipOval(
+                    child: SvgPicture.asset(
+                      'assets/icons/profil-arany.svg',
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                ),
         ),
       );
     } else if ((!onAuthPage && user == null && !showBackBtn) || onHomePage) {
       return IconButton(
-        icon: Image.asset(
-          'assets/icons/arc_profile_icon.png',
-          height: 28,
+        icon: SvgPicture.asset(
+          'assets/icons/profil-arany.svg',
         ),
         onPressed: () => Navigator.pushNamed(
           context,

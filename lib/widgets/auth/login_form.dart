@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:arcjoga_frontend/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 // import 'package:local_auth/local_auth.dart';
@@ -12,6 +13,8 @@ import 'package:arcjoga_frontend/validators.dart';
 import 'package:arcjoga_frontend/widgets/common/app_text_button.dart';
 import 'package:arcjoga_frontend/widgets/common/app_text_field.dart';
 import 'package:arcjoga_frontend/widgets/common/error_dialog.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:provider/provider.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -22,6 +25,7 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
+  final LocalAuthentication _localAuth = LocalAuthentication();
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -78,21 +82,27 @@ class _LoginFormState extends State<LoginForm> {
       String? token = responseData['access_token'];
 
       if (token != null) {
-        await _secureStorage.write(
-          key: 'token',
-          value: token,
-        );
-        await _secureStorage.write(
-          key: 'tokenExpiry',
-          value: responseData['expires_at'],
-        );
-
-        await _secureStorage.write(
-          key: 'user',
-          value: userJson,
+        Provider.of<UserProvider>(
+          context,
+          listen: false,
+        ).login(
+          token,
+          responseData['expires_at'],
         );
 
-        await _promptBiometricAuth();
+        Provider.of<UserProvider>(
+          context,
+          listen: false,
+        ).updateUser(user);
+
+        bool canCheckBiometrics = await _localAuth.canCheckBiometrics;
+        String? useBiometricAuth = await _secureStorage.read(
+          key: 'useBiometricAuth',
+        );
+
+        if (canCheckBiometrics && useBiometricAuth == null) {
+          await _promptBiometricAuth();
+        }
 
         Navigator.of(context).pushNamed(HomePage.routeName);
       }

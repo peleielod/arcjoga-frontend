@@ -9,6 +9,7 @@ import 'package:arcjoga_frontend/widgets/appbars/main_appbar.dart';
 import 'package:arcjoga_frontend/widgets/settings/settings_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -127,13 +128,29 @@ class _ProfileState extends State<Profile> {
             clipBehavior: Clip.none,
             alignment: Alignment.center,
             children: [
-              CircleAvatar(
-                radius: 80,
-                backgroundImage: _user!.avatarUrl != null
-                    ? NetworkImage(_user!.avatarUrl!)
-                    : const AssetImage('assets/icons/arc_profile_icon.png')
-                        as ImageProvider,
-              ),
+              _user != null &&
+                      _user?.avatarUrl != null &&
+                      _user!.avatarUrl!.isNotEmpty
+                  ? CircleAvatar(
+                      radius: 80,
+                      backgroundImage: NetworkImage(_user!.avatarUrl!),
+                    )
+                  : Container(
+                      width: 160, // Match the size of the CircleAvatar
+                      height: 160,
+                      padding: const EdgeInsets.all(5),
+                      decoration: const BoxDecoration(
+                        color: Color(Style.borderLight),
+                        shape: BoxShape.circle,
+                      ),
+                      child: ClipOval(
+                        child: SvgPicture.asset(
+                          'assets/icons/profil-arany.svg',
+                          // Make sure the SVG fills the container, if necessary
+                          fit: BoxFit.fitHeight,
+                        ),
+                      ),
+                    ),
               Positioned(
                 right: -20,
                 bottom: 40,
@@ -149,6 +166,9 @@ class _ProfileState extends State<Profile> {
               ),
             ],
           ),
+          Text(_user != null
+              ? _user?.avatarUrl ?? 'Nincs avatar url'
+              : 'Nincs user se'),
           const SizedBox(height: 10),
           if (_user != null)
             Text(
