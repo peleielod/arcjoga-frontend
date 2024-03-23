@@ -28,7 +28,7 @@ class _LoginFormState extends State<LoginForm> {
   // final LocalAuthentication _localAuth = LocalAuthentication();
 
   void _loadTestData() {
-    _emailController.text = 'asd@good.com';
+    _emailController.text = 'asd@asdasd.com';
     _passwordController.text = 'asdasd';
   }
 

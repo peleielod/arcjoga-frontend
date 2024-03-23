@@ -112,17 +112,21 @@ class _ChangePasswordState extends State<ChangePassword> {
   @override
   Widget build(BuildContext context) {
     return MainLayout(
-      title: 'JELSZO CSERE',
       appBar: const MainAppBar(
+        title: 'JELSZO CSERE',
         showBackBtn: true,
       ),
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 20.0,
+            vertical: 20,
           ),
           child: Column(
             children: [
+              const SizedBox(height: 20),
+              Image.asset('assets/icons/lock_icon.png'),
+              const SizedBox(height: 30),
               CheckboxListTile(
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 1,
@@ -142,36 +146,34 @@ class _ChangePasswordState extends State<ChangePassword> {
                     AppTextField(
                       labelText: 'Jelenlegi jelszó',
                       textController: _oldPasswordController,
-                      textStyle: Style.primaryDarkTextSmall,
                       keyboardType: TextInputType.text,
-                      obscureText: true,
-                      textColor: const Color(Style.primaryDark),
+                      textStyle: Style.primaryLightTextSmall,
+                      textColor: const Color(Style.primaryLight),
                       fillColor: const Color(Style.white),
-                      borderColor: const Color(Style.primaryDark),
+                      borderColor: const Color(Style.primaryLight),
                       validator: Validators.passwordValidator,
                     ),
                     const SizedBox(height: 30),
                     AppTextField(
                       labelText: 'Jelszó',
                       textController: _passwordController,
-                      textStyle: Style.primaryDarkTextSmall,
                       keyboardType: TextInputType.text,
-                      obscureText: true,
-                      textColor: const Color(Style.primaryDark),
+                      textStyle: Style.primaryLightTextSmall,
+                      textColor: const Color(Style.primaryLight),
                       fillColor: const Color(Style.white),
-                      borderColor: const Color(Style.primaryDark),
+                      borderColor: const Color(Style.primaryLight),
                       validator: Validators.passwordValidator,
                     ),
                     const SizedBox(height: 30),
                     AppTextField(
                       labelText: 'Jelszó újra',
                       textController: _passwordAgainController,
-                      textStyle: Style.primaryDarkTextSmall,
                       keyboardType: TextInputType.text,
-                      obscureText: true,
-                      textColor: const Color(Style.primaryDark),
+                      textStyle: Style.primaryLightTextSmall,
+                      textColor: const Color(Style.primaryLight),
                       fillColor: const Color(Style.white),
-                      borderColor: const Color(Style.primaryDark),
+                      borderColor: const Color(Style.primaryLight),
+                      obscureText: true,
                       validator: Validators.passwordValidator,
                     ),
                     if (_errorMsg.isNotEmpty)
@@ -184,7 +186,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                       text: 'Jelszó megváltoztatása',
                       width: 330,
                       textStyle: Style.textWhite,
-                      backgroundColor: const Color(Style.primaryDark),
+                      backgroundColor: const Color(Style.buttonDark),
                       onPressed: _handleChangePassword,
                     ),
                   ],

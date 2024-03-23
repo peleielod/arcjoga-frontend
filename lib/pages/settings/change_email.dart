@@ -82,50 +82,53 @@ class _ChangeEmailState extends State<ChangeEmail> {
   @override
   Widget build(BuildContext context) {
     return MainLayout(
-      title: 'EMAIL CSERE',
       appBar: const MainAppBar(
+        title: 'EMAIL CSERE',
         showBackBtn: true,
       ),
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 20.0,
+            vertical: 20,
           ),
           child: Form(
             key: _formKey,
             child: Column(
               children: [
-                const SizedBox(height: 30),
+                const SizedBox(height: 50),
+                Image.asset('assets/icons/mail_icon.png'),
+                const SizedBox(height: 50),
                 AppTextField(
                   labelText: 'Jelenlegi email cim',
                   textController: _oldEmailController,
-                  textStyle: Style.primaryDarkTextSmall,
                   keyboardType: TextInputType.emailAddress,
-                  textColor: const Color(Style.primaryDark),
+                  textStyle: Style.primaryLightTextSmall,
+                  textColor: const Color(Style.primaryLight),
                   fillColor: const Color(Style.white),
-                  borderColor: const Color(Style.primaryDark),
+                  borderColor: const Color(Style.primaryLight),
                   validator: Validators.emailValidator,
                 ),
                 const SizedBox(height: 30),
                 AppTextField(
                   labelText: 'Email',
                   textController: _emailController,
-                  textStyle: Style.primaryDarkTextSmall,
                   keyboardType: TextInputType.emailAddress,
-                  textColor: const Color(Style.primaryDark),
+                  textStyle: Style.primaryLightTextSmall,
+                  textColor: const Color(Style.primaryLight),
                   fillColor: const Color(Style.white),
-                  borderColor: const Color(Style.primaryDark),
+                  borderColor: const Color(Style.primaryLight),
                   validator: Validators.emailValidator,
                 ),
                 const SizedBox(height: 30),
                 AppTextField(
                   labelText: 'Email újra',
                   textController: _emailAgainController,
-                  textStyle: Style.primaryDarkTextSmall,
                   keyboardType: TextInputType.emailAddress,
-                  textColor: const Color(Style.primaryDark),
+                  textStyle: Style.primaryLightTextSmall,
+                  textColor: const Color(Style.primaryLight),
                   fillColor: const Color(Style.white),
-                  borderColor: const Color(Style.primaryDark),
+                  borderColor: const Color(Style.primaryLight),
                   validator: Validators.emailValidator,
                 ),
                 if (_errorMsg.isNotEmpty)
@@ -138,7 +141,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
                   text: 'Email megváltoztatása',
                   width: 330,
                   textStyle: Style.textWhite,
-                  backgroundColor: const Color(Style.primaryDark),
+                  backgroundColor: const Color(Style.buttonDark),
                   onPressed: _handleChangeEmail,
                 ),
               ],

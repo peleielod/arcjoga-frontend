@@ -1,7 +1,6 @@
 import 'package:arcjoga_frontend/models/user.dart';
 import 'package:arcjoga_frontend/providers/user_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:arcjoga_frontend/pages/auth/login.dart';
 import 'package:arcjoga_frontend/pages/settings/profile.dart';
 import 'package:arcjoga_frontend/style.dart';
@@ -23,24 +22,15 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    var userProvider = Provider.of<UserProvider>(context);
-
-    Future<bool> isLoggedIn = userProvider.isUserLoggedIn();
-    Future<User?> userFuture = isLoggedIn.then((isLoggedIn) {
-      if (isLoggedIn) {
-        return userProvider.fetchUser();
-      }
-      return null;
-    });
+    final userProvider = Provider.of<UserProvider>(context);
+    final user = userProvider.user;
+    final isLoggedIn = userProvider.isLoggedIn;
 
     return AppBar(
       backgroundColor: const Color(Style.primaryDark),
       foregroundColor: const Color(Style.primaryLight),
       centerTitle: true,
-      leading: FutureBuilder<User?>(
-        future: userFuture,
-        builder: (context, snapshot) => _buildLeadingWidget(context, snapshot),
-      ),
+      leading: _buildLeadingWidget(context, user, isLoggedIn),
       title: onAuthPage ? null : Text(title ?? ''),
       actions: [
         IconButton(
@@ -57,12 +47,11 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget _buildLeadingWidget(
-      BuildContext context, AsyncSnapshot<User?> snapshot) {
-    if (snapshot.connectionState == ConnectionState.done &&
-        snapshot.hasData &&
-        (!showBackBtn || onHomePage)) {
-      final user = snapshot.data;
-
+    BuildContext context,
+    User? user,
+    bool isLoggedIn,
+  ) {
+    if (user != null && (!showBackBtn || onHomePage) && isLoggedIn) {
       return GestureDetector(
         onTap: () => Navigator.pushNamed(context, Profile.routeName),
         child: Padding(
@@ -74,7 +63,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           child: CircleAvatar(
             radius: 18,
-            backgroundImage: user!.avatarUrl != null
+            backgroundImage: user.avatarUrl != null
                 ? NetworkImage(
                     user.avatarUrl!,
                   )
@@ -83,8 +72,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       );
-    } else if ((!onAuthPage && !(snapshot.hasData) && !showBackBtn) ||
-        onHomePage) {
+    } else if ((!onAuthPage && user == null && !showBackBtn) || onHomePage) {
       return IconButton(
         icon: Image.asset(
           'assets/icons/arc_profile_icon.png',
@@ -92,7 +80,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         onPressed: () => Navigator.pushNamed(
           context,
-          snapshot.hasData ? Profile.routeName : Login.routeName,
+          Login.routeName,
         ),
       );
     } else if (showBackBtn) {
