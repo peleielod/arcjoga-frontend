@@ -1,4 +1,6 @@
-class Course {
+import 'package:intl/intl.dart';
+
+class UserCourse {
   final int id;
   final String imageUrl;
   final String title;
@@ -7,11 +9,10 @@ class Course {
   final bool isFree;
   final int order;
   final int validityWeeks;
-  final bool? purchased;
-  final bool? isValid;
-  final bool? watched;
+  final DateTime validity;
+  final String formattedValidity;
 
-  Course({
+  UserCourse({
     required this.id,
     required this.imageUrl,
     required this.title,
@@ -20,15 +21,15 @@ class Course {
     required this.isFree,
     required this.order,
     required this.validityWeeks,
-    this.isValid,
-    this.purchased,
-    this.watched,
+    required this.validity,
+    required this.formattedValidity,
   });
 
-  factory Course.fromJson(Map<String, dynamic> json) {
-    var testJson = json;
+  factory UserCourse.fromJson(Map<String, dynamic> json) {
+    DateFormat format = DateFormat("yyyy. MM. dd.");
+    DateTime parsedValidity = format.parse(json['formatted_validity']);
 
-    return Course(
+    return UserCourse(
       id: json['id'],
       imageUrl: json['image_url'],
       title: json['title'],
@@ -37,9 +38,8 @@ class Course {
       isFree: json['is_free'] == 1,
       order: json['home_order'] ?? 0,
       validityWeeks: json['validity_weeks'],
-      isValid: json['isValid'],
-      purchased: json['purchased'],
-      watched: json['watched'], 
+      validity: parsedValidity,
+      formattedValidity: json['formatted_validity'],
     );
   }
 }

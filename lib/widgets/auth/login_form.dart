@@ -77,24 +77,24 @@ class _LoginFormState extends State<LoginForm> {
       var responseData = response.data;
 
       User user = User.fromJson(responseData['user']);
+
       String userJson = json.encode(user.toJson());
 
       String? token = responseData['access_token'];
 
       if (token != null) {
-        Provider.of<UserProvider>(
+        var userProvider = Provider.of<UserProvider>(
           context,
           listen: false,
-        ).login(
+        );
+        userProvider.login(
           token,
           responseData['expires_at'],
         );
 
-        Provider.of<UserProvider>(
-          context,
-          listen: false,
-        ).updateUser(user);
-
+        userProvider.updateUser(user);
+        userProvider.saveUserCourses(responseData['user_courses']);
+        
         bool canCheckBiometrics = await _localAuth.canCheckBiometrics;
         String? useBiometricAuth = await _secureStorage.read(
           key: 'useBiometricAuth',

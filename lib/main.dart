@@ -1,3 +1,4 @@
+import 'package:arcjoga_frontend/models/course_with_content.dart';
 import 'package:arcjoga_frontend/models/loader.dart';
 import 'package:arcjoga_frontend/pages/auth/forgot_password.dart';
 import 'package:arcjoga_frontend/pages/auth/forgot_password_sent.dart';
@@ -5,11 +6,15 @@ import 'package:arcjoga_frontend/pages/auth/forgot_password_verify.dart';
 import 'package:arcjoga_frontend/pages/auth/login.dart';
 import 'package:arcjoga_frontend/pages/auth/register.dart';
 import 'package:arcjoga_frontend/pages/auth/register_verify.dart';
+import 'package:arcjoga_frontend/pages/course_watch.dart';
 import 'package:arcjoga_frontend/pages/home.dart';
 import 'package:arcjoga_frontend/pages/settings/change_email.dart';
 import 'package:arcjoga_frontend/pages/settings/change_password.dart';
 import 'package:arcjoga_frontend/pages/settings/profile.dart';
+import 'package:arcjoga_frontend/pages/settings/user_courses.dart';
+import 'package:arcjoga_frontend/pages/settings/user_subs.dart';
 import 'package:arcjoga_frontend/providers/course_provider.dart';
+import 'package:arcjoga_frontend/providers/sub_provider.dart';
 import 'package:arcjoga_frontend/providers/user_provider.dart';
 import 'package:arcjoga_frontend/widgets/common/loader_widget.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +29,9 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) => CourseProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SubProvider(),
         ),
         ChangeNotifierProvider(
           create: (context) => LoaderModel(),
@@ -69,6 +77,13 @@ class MyApp extends StatelessWidget {
       ),
       home: const HomePage(),
       onGenerateRoute: (settings) {
+        if (settings.name == CourseWatch.routeName) {
+          final args = settings.arguments as CourseWithContent;
+          return MaterialPageRoute(
+            builder: (context) => CourseWatch(courseWithContent: args),
+          );
+        }
+
         if (settings.name == ForgottPasswordSent.routeName) {
           final args = settings.arguments as String;
           return MaterialPageRoute(
@@ -101,6 +116,8 @@ class MyApp extends StatelessWidget {
         ChangePassword.routeName: (context) => const ChangePassword(),
         ChangeEmail.routeName: (context) => const ChangeEmail(),
         ForgotPassword.routeName: (context) => const ForgotPassword(),
+        UserSubs.routeName: (context) => const UserSubs(),
+        UserCourses.routeName: (context) => const UserCourses(),
       },
     );
   }

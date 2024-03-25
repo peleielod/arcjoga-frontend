@@ -4,6 +4,8 @@ import 'package:arcjoga_frontend/models/user.dart';
 import 'package:arcjoga_frontend/pages/home.dart';
 import 'package:arcjoga_frontend/pages/settings/change_email.dart';
 import 'package:arcjoga_frontend/pages/settings/change_password.dart';
+import 'package:arcjoga_frontend/pages/settings/user_courses.dart';
+import 'package:arcjoga_frontend/pages/settings/user_subs.dart';
 import 'package:arcjoga_frontend/providers/user_provider.dart';
 import 'package:arcjoga_frontend/style.dart';
 import 'package:arcjoga_frontend/widgets/common/error_dialog.dart';
@@ -23,7 +25,11 @@ class SettingsList extends StatelessWidget {
   }
 
   void _subscriptions(BuildContext context) {
-    Navigator.pushNamed(context, HomePage.routeName);
+    Navigator.pushNamed(context, UserSubs.routeName);
+  }
+
+  void _userCourses(BuildContext context) {
+    Navigator.pushNamed(context, UserCourses.routeName);
   }
 
   Future<void> _logout(BuildContext context) async {
@@ -154,7 +160,7 @@ class SettingsList extends StatelessWidget {
                     'MEGVÁSÁROLT CSOMAGOK',
                     style: Style.textDarkBlue,
                   ),
-                  onTap: () => _subscriptions(context),
+                  onTap: () => _userCourses(context),
                 ),
                 const Divider(
                   color: Color(Style.primaryLight),

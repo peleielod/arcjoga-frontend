@@ -32,6 +32,7 @@ class _ErrorDialogState extends State<ErrorDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: const Color(Style.white),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),
@@ -40,7 +41,10 @@ class _ErrorDialogState extends State<ErrorDialog> {
         alignment: Alignment.topRight,
         children: [
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 25,
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -93,7 +97,7 @@ class _ErrorDialogState extends State<ErrorDialog> {
             top: -25,
             child: TextButton(
               style: TextButton.styleFrom(
-                backgroundColor: const Color(Style.buttonDark),
+                backgroundColor: const Color(Style.primaryDark),
                 minimumSize: const Size(40, 40),
                 padding: EdgeInsets.zero,
                 shape: RoundedRectangleBorder(

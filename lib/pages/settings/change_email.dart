@@ -10,6 +10,7 @@ import 'package:arcjoga_frontend/widgets/appbars/main_appbar.dart';
 import 'package:arcjoga_frontend/widgets/common/app_text_button.dart';
 import 'package:arcjoga_frontend/widgets/common/app_text_field.dart';
 import 'package:arcjoga_frontend/widgets/common/error_message.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 class ChangeEmail extends StatefulWidget {
@@ -97,7 +98,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
             child: Column(
               children: [
                 const SizedBox(height: 50),
-                Image.asset('assets/icons/mail_icon.png'),
+                SvgPicture.asset('assets/icons/emailcsere.svg'),
                 const SizedBox(height: 50),
                 AppTextField(
                   labelText: 'Jelenlegi email cim',

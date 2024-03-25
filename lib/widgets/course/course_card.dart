@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:arcjoga_frontend/config.dart';
+import 'package:arcjoga_frontend/helpers.dart';
 import 'package:arcjoga_frontend/models/course.dart';
+import 'package:arcjoga_frontend/models/course_with_content.dart';
+import 'package:arcjoga_frontend/pages/course_watch.dart';
 import 'package:arcjoga_frontend/style.dart';
 import 'package:arcjoga_frontend/widgets/common/app_text_button.dart';
 import 'package:arcjoga_frontend/widgets/common/network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class CourseCard extends StatelessWidget {
   final Course course;
@@ -25,11 +30,6 @@ class CourseCard extends StatelessWidget {
         color: const Color(Style.white),
         child: Container(
           width: 200,
-          // height: 500,
-          // padding: const EdgeInsets.symmetric(
-          //   vertical: 5,
-          //   horizontal: 5,
-          // ),
           decoration: BoxDecoration(
             color: const Color(Style.white),
             border: Border.all(
@@ -90,12 +90,20 @@ class CourseCard extends StatelessWidget {
                   const SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10.0),
-                    child: AppTextButton(
-                      backgroundColor: const Color(Style.buttonDark),
-                      text: 'Megnézem',
-                      textStyle: Style.textWhite,
-                      onPressed: () {},
-                    ),
+                    child: course.price == 0 ||
+                            (course.purchased != null && course.purchased!)
+                        ? AppTextButton(
+                            backgroundColor: const Color(Style.buttonDark),
+                            text: 'Megnézem',
+                            textStyle: Style.textWhite,
+                            onPressed: () => _handleOpenCourse(context),
+                          )
+                        : AppTextButton(
+                            backgroundColor: const Color(Style.buttonDark),
+                            text: 'Ezt választom',
+                            textStyle: Style.textWhite,
+                            onPressed: () => _handlePurchaseCourse(context),
+                          ),
                   ),
                 ],
               ),
@@ -105,4 +113,42 @@ class CourseCard extends StatelessWidget {
       ),
     );
   }
+
+  void _handleOpenCourse(BuildContext context) async {
+    try {
+      var data = {
+        'courseId': course.id,
+      };
+
+      CustomResponse response = await Helpers.sendRequest(
+        context,
+        'openCourse',
+        method: 'post',
+        body: data,
+        requireToken: true,
+      );
+
+      if (response.statusCode == 200) {
+        CourseWithContent courseWithContent =
+            CourseWithContent.fromJson(response.data);
+
+        Navigator.pushNamed(
+          context,
+          CourseWatch.routeName,
+          arguments: courseWithContent,
+        );
+      }
+    } catch (e, stackTrace) {
+      if (Config.isLiveMode) {
+        await Sentry.captureException(
+          e,
+          stackTrace: stackTrace,
+        );
+      }
+      // Navigator.pop(context);
+      print("SEND ERROR: $e");
+    }
+  }
+
+  void _handlePurchaseCourse(BuildContext context) async {}
 }

@@ -1,6 +1,7 @@
 import 'package:arcjoga_frontend/layouts/main_layout.dart';
 import 'package:arcjoga_frontend/models/course.dart';
 import 'package:arcjoga_frontend/providers/course_provider.dart';
+import 'package:arcjoga_frontend/providers/sub_provider.dart';
 import 'package:arcjoga_frontend/widgets/appbars/main_appbar.dart';
 import 'package:arcjoga_frontend/widgets/course/course_card.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     Provider.of<CourseProvider>(context, listen: false).fetchCourses(context);
+    Provider.of<SubProvider>(context, listen: false).fetchSub(context);
   }
 
   @override

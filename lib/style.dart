@@ -87,6 +87,14 @@ class Style {
     fontSize: 18,
   );
 
+  static const TextStyle titleDarkLarge = TextStyle(
+    color: Color(primaryDark),
+    fontWeight: FontWeight.w500,
+    fontFamily: 'Montserrat',
+    fontSize: 22,
+  );
+
+
   static const TextStyle textDarkBlue = TextStyle(
     color: Color(primaryDark),
     fontWeight: FontWeight.w400,

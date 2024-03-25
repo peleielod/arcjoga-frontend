@@ -137,9 +137,13 @@ class Helpers {
     // _showLoader(context);
 
     if (requireToken) {
-      var isLoggedIn =
-          await Provider.of<UserProvider>(context).isUserLoggedIn();
+      var isLoggedIn = await Provider.of<UserProvider>(
+        context,
+        listen: false,
+      ).isUserLoggedIn();
+
       String? bearerToken = await _storage.read(key: 'token');
+      
       if (bearerToken == null && !isLoggedIn) {
         Flushbar(
           message: "A bejelentkezése lejárt, kérjük lépjen be újra fiókjába!",
