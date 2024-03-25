@@ -18,28 +18,41 @@ import 'package:arcjoga_frontend/providers/sub_provider.dart';
 import 'package:arcjoga_frontend/providers/user_provider.dart';
 import 'package:arcjoga_frontend/widgets/common/loader_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
-void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => UserProvider(),
+void main() async {
+  await SentryFlutter.init((options) {
+    options.dsn =
+        'https://cc636aa848e469ddca7c45a97b3ca899@o4504498510299136.ingest.us.sentry.io/4506972825845760';
+    options.tracesSampleRate = 1.0;
+  }, appRunner: () {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]).then((_) {
+      runApp(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (context) => UserProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (context) => CourseProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (context) => SubProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (context) => LoaderModel(),
+            ),
+          ],
+          child: const MyAppWithLoader(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => CourseProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => SubProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => LoaderModel(),
-        ),
-      ],
-      child: const MyAppWithLoader(),
-    ),
-  );
+      );
+    });
+  });
 }
 
 class MyAppWithLoader extends StatelessWidget {
