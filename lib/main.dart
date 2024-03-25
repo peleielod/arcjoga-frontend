@@ -19,10 +19,14 @@ import 'package:arcjoga_frontend/providers/user_provider.dart';
 import 'package:arcjoga_frontend/widgets/common/loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 void main() async {
+  const FlutterSecureStorage secureStorage = FlutterSecureStorage();
+  await secureStorage.deleteAll();
+
   await SentryFlutter.init((options) {
     options.dsn =
         'https://cc636aa848e469ddca7c45a97b3ca899@o4504498510299136.ingest.us.sentry.io/4506972825845760';
