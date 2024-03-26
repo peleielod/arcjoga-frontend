@@ -29,7 +29,7 @@ class _CourseWatchState extends State<CourseWatch> {
       appBar: const MainAppBar(),
       children: [
         Text(course.title),
-        Text(contents[0].title),
+        Text(contents.isNotEmpty ? contents[0].title : 'No content'),
       ],
     );
   }

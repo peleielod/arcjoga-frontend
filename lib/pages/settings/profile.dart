@@ -166,9 +166,6 @@ class _ProfileState extends State<Profile> {
               ),
             ],
           ),
-          Text(_user != null
-              ? _user?.avatarUrl ?? 'Nincs avatar url'
-              : 'Nincs user se'),
           const SizedBox(height: 10),
           if (_user != null)
             Text(
