@@ -17,8 +17,16 @@ class AppAccordion extends StatefulWidget {
     this.headerTextStyle,
     this.headerBackgroundColor = const Color(Style.buttonDark),
     this.bodyBackgroundColor = const Color(Style.white),
-    this.expandIcon = const Icon(Icons.expand_more),
-    this.collapseIcon = const Icon(Icons.expand_less),
+    this.expandIcon = const Icon(
+      Icons.expand_more,
+      color: Color(Style.white),
+      size: 32,
+    ),
+    this.collapseIcon = const Icon(
+      Icons.expand_less,
+      color: Color(Style.white),
+      size: 32,
+    ),
   });
 
   @override
@@ -33,8 +41,16 @@ class _AppAccordionState extends State<AppAccordion> {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.all(10),
-          color: widget.headerBackgroundColor,
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          decoration: BoxDecoration(
+            color: widget.headerBackgroundColor,
+            borderRadius: _isExpanded
+                ? const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                  )
+                : BorderRadius.circular(10),
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -56,7 +72,13 @@ class _AppAccordionState extends State<AppAccordion> {
         ),
         _isExpanded
             ? Container(
-                color: widget.bodyBackgroundColor,
+                decoration: BoxDecoration(
+                  color: widget.headerBackgroundColor,
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                  ),
+                ),
                 width: double.infinity,
                 padding: const EdgeInsets.all(10),
                 child: widget.child,

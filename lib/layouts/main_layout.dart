@@ -25,7 +25,10 @@ class MainLayout extends StatelessWidget {
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 10,
+            ),
             child: Column(
               // crossAxisAlignment: CrossAxisAlignment.center,
               children: [

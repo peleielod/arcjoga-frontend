@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:arcjoga_frontend/config.dart';
 import 'package:arcjoga_frontend/helpers.dart';
 import 'package:arcjoga_frontend/models/course.dart';
+import 'package:arcjoga_frontend/models/course_content.dart';
 import 'package:arcjoga_frontend/models/course_with_content.dart';
 import 'package:arcjoga_frontend/pages/course_watch.dart';
 import 'package:arcjoga_frontend/style.dart';
@@ -125,17 +126,22 @@ class CourseCard extends StatelessWidget {
         'openCourse',
         method: 'post',
         body: data,
-        requireToken: true,
+        requireToken: false,
       );
 
       if (response.statusCode == 200) {
         CourseWithContent courseWithContent =
             CourseWithContent.fromJson(response.data);
+        CourseContent activeContent =
+            CourseContent.fromJson(response.data['activeContent']);
 
         Navigator.pushNamed(
           context,
           CourseWatch.routeName,
-          arguments: courseWithContent,
+          arguments: CourseWatchArguments(
+            courseWithContent: courseWithContent,
+            activeContent: activeContent,
+          ),
         );
       }
     } catch (e, stackTrace) {

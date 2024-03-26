@@ -143,7 +143,7 @@ class Helpers {
       ).isUserLoggedIn();
 
       String? bearerToken = await _storage.read(key: 'token');
-      
+
       if (bearerToken == null && !isLoggedIn) {
         Flushbar(
           message: "A bejelentkezése lejárt, kérjük lépjen be újra fiókjába!",
@@ -199,7 +199,7 @@ class Helpers {
           statusCode: response.statusCode,
           data: json.decode(response.body)['message'],
         );
-      } else {
+      } else if (response.statusCode >= 400) {
         // _hideLoader(context);
         loaderModel.hide();
         Flushbar(

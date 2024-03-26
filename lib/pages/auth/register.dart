@@ -19,6 +19,7 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MainAppBar(
+        title: 'REGISZTRÁCIÓ',
         onAuthPage: true,
         showBackBtn: true,
       ),
@@ -34,10 +35,13 @@ class _RegisterState extends State<Register> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                const SizedBox(height: 30),
                 SvgPicture.asset(
-                  'assets/images/register_logo_good.svg',
-                  height: 200,
+                  'assets/icons/logo.svg',
+                  width: 250,
+                  // height: 200,
                 ),
+                const SizedBox(height: 30),
                 const RegisterForm(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

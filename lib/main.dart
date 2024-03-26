@@ -97,9 +97,12 @@ class MyApp extends StatelessWidget {
       home: const HomePage(),
       onGenerateRoute: (settings) {
         if (settings.name == CourseWatch.routeName) {
-          final args = settings.arguments as CourseWithContent;
+          final args = settings.arguments as CourseWatchArguments;
           return MaterialPageRoute(
-            builder: (context) => CourseWatch(courseWithContent: args),
+            builder: (context) => CourseWatch(
+              courseWithContent: args.courseWithContent,
+              activeContent: args.activeContent,
+            ),
           );
         }
 
