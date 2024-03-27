@@ -38,10 +38,14 @@ class _AppAccordionState extends State<AppAccordion> {
 
   @override
   Widget build(BuildContext context) {
+    // Az egesz header onTap
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          padding: const EdgeInsets.symmetric(
+            vertical: 5,
+            horizontal: 15,
+          ),
           decoration: BoxDecoration(
             color: widget.headerBackgroundColor,
             borderRadius: _isExpanded

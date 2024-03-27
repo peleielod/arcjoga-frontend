@@ -28,7 +28,7 @@ class User {
       email: jsonObject['email'],
       userSub: jsonObject['user_sub'] != null
           ? UserSub.fromJson(
-              json.decode(jsonObject['user_sub']),
+              jsonObject['user_sub'],
             )
           : null,
     );

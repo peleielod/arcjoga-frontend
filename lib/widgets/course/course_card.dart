@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:arcjoga_frontend/config.dart';
 import 'package:arcjoga_frontend/helpers.dart';
 import 'package:arcjoga_frontend/models/course.dart';
@@ -9,6 +7,7 @@ import 'package:arcjoga_frontend/pages/course_watch.dart';
 import 'package:arcjoga_frontend/style.dart';
 import 'package:arcjoga_frontend/widgets/common/app_text_button.dart';
 import 'package:arcjoga_frontend/widgets/common/network_image.dart';
+import 'package:arcjoga_frontend/widgets/purchase/purchase_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -44,11 +43,11 @@ class CourseCard extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  AppNetworkImage(
-                    imageUrl: '${Config.backendUrl}/${course.imageUrl}',
-                    width: 325,
-                  ),
-                  const SizedBox(height: 10),
+                  // AppNetworkImage(
+                  //   imageUrl: '${Config.backendUrl}/${course.imageUrl}',
+                  //   width: 325,
+                  // ),
+                  const SizedBox(height: 15),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5.0),
                     child: Text(
@@ -156,5 +155,17 @@ class CourseCard extends StatelessWidget {
     }
   }
 
-  void _handlePurchaseCourse(BuildContext context) async {}
+  void _handlePurchaseCourse(BuildContext context) async {
+    bool confirm = await showDialog(
+      context: context,
+      builder: (BuildContext context) => PurchaseDialog(
+        title: course.title,
+        price: course.price,
+        itemId: course.id,
+        validity: DateTime.now().add(
+          Duration(days: 7 * course.validityWeeks),
+        ),
+      ),
+    );
+  }
 }

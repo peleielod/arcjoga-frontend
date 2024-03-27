@@ -199,7 +199,7 @@ class Helpers {
           statusCode: response.statusCode,
           data: json.decode(response.body)['message'],
         );
-      } else if (response.statusCode >= 400) {
+      } else if (response.statusCode > 299) {
         // _hideLoader(context);
         loaderModel.hide();
         Flushbar(

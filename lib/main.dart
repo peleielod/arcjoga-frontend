@@ -1,3 +1,4 @@
+import 'package:arcjoga_frontend/config.dart';
 import 'package:arcjoga_frontend/models/course_with_content.dart';
 import 'package:arcjoga_frontend/models/loader.dart';
 import 'package:arcjoga_frontend/pages/auth/forgot_password.dart';
@@ -8,6 +9,7 @@ import 'package:arcjoga_frontend/pages/auth/register.dart';
 import 'package:arcjoga_frontend/pages/auth/register_verify.dart';
 import 'package:arcjoga_frontend/pages/course_watch.dart';
 import 'package:arcjoga_frontend/pages/home.dart';
+import 'package:arcjoga_frontend/pages/purchase/payment_success.dart';
 import 'package:arcjoga_frontend/pages/settings/change_email.dart';
 import 'package:arcjoga_frontend/pages/settings/change_password.dart';
 import 'package:arcjoga_frontend/pages/settings/profile.dart';
@@ -22,12 +24,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:uni_links/uni_links.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   const FlutterSecureStorage secureStorage = FlutterSecureStorage();
   await secureStorage.deleteAll();
+
+  await initDeepLinkListener();
 
   await SentryFlutter.init((options) {
     options.dsn =
@@ -61,6 +66,36 @@ void main() async {
   });
 }
 
+Future<void> initDeepLinkListener() async {
+  // Get any initial link
+  final initialLink = await getInitialUri();
+
+  if (initialLink != null) {
+    // Handle the initial link if the app was started with a deep link
+    handleDeepLink(initialLink);
+  }
+
+  // Listen for new links coming in while the app is running
+  uriLinkStream.listen((Uri? uri) {
+    if (uri != null) {
+      handleDeepLink(uri);
+    }
+  }, onError: (err) async {
+    print('DEeeeep link listener error: ${err.toString()}');
+    if (Config.isLiveMode) {
+      await Sentry.captureException(err);
+    }
+  });
+}
+
+void handleDeepLink(Uri uri) {
+  print("Deep LINK Detected: ${uri.toString()}");
+  if (uri.path == '/paymentSuccess') {
+    // Example on how to navigate to a specific route based on the deep link
+    MyApp.navigatorKey.currentState?.pushNamed(PaymentSuccess.routeName);
+  }
+}
+
 class MyAppWithLoader extends StatelessWidget {
   const MyAppWithLoader({super.key});
 
@@ -85,10 +120,13 @@ class MyAppWithLoader extends StatelessWidget {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -140,6 +178,7 @@ class MyApp extends StatelessWidget {
         ForgotPassword.routeName: (context) => const ForgotPassword(),
         UserSubs.routeName: (context) => const UserSubs(),
         UserCourses.routeName: (context) => const UserCourses(),
+        PaymentSuccess.routeName: (context) => const PaymentSuccess(),
       },
     );
   }

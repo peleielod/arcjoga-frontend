@@ -32,17 +32,17 @@ class _LoginFormState extends State<LoginForm> {
   // final LocalAuthentication _localAuth = LocalAuthentication();
 
   void _loadTestData() {
-    _emailController.text = 'asd@asdasd.com';
-    _passwordController.text = 'asdasd';
+    _emailController.text = 'zolcsak.matyas@webinit.hu';
+    _passwordController.text = 'test';
   }
 
   @override
   void initState() {
     super.initState();
 
-    if (!Config.isLiveMode) {
-      _loadTestData();
-    }
+    // if (!Config.isLiveMode) {
+    _loadTestData();
+    // }
   }
 
   //  Future<void> _checkBiometricSupport() async {
@@ -94,7 +94,7 @@ class _LoginFormState extends State<LoginForm> {
 
         userProvider.updateUser(user);
         userProvider.saveUserCourses(responseData['user_courses']);
-        
+
         bool canCheckBiometrics = await _localAuth.canCheckBiometrics;
         String? useBiometricAuth = await _secureStorage.read(
           key: 'useBiometricAuth',

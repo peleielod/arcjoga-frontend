@@ -6,7 +6,7 @@ class Style {
   static const int primaryDark = 0xFF2A2F6A;
 
   static const int playlistLight = 0xFFF4F5FF;
-  static const int secondaryLight = 0xFFB75DCD;
+  static const int secondaryLight = 0xFFFFFCF3;
   static const int secondaryDark = 0xFFB914BC;
 
   static const int textDark = 0xFF302F2F;
@@ -127,7 +127,7 @@ class Style {
     color: Color(white),
     fontWeight: FontWeight.w500,
     fontFamily: 'Montserrat',
-    fontSize: 18,
+    fontSize: 16,
   );
 
   static const TextStyle textWhiteSmall = TextStyle(
